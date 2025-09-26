@@ -1,50 +1,101 @@
-// import { useEffect } from "react";
-
-type CoordsType = {
-  y: number;
-  x: number;
-};
+import useContextMenu from "@/customHooks/useContextMenu";
+import { useSearchedWordContext } from "@/customHooks/useSearchedWordContext";
+import usePositionWordDef from "@/customHooks/usePositionWordDef";
+import axios from "axios";
+import useVocabListContext from "@/customHooks/useVocabListContext";
 
 type ContextMenuPropsType = {
-  isMenuVisible: boolean;
-  coords: CoordsType;
+  setIsDefVisible: React.Dispatch<React.SetStateAction<boolean>>;
   menuRef: React.RefObject<HTMLDivElement | null>;
-  setMenuWidth: React.Dispatch<React.SetStateAction<number | undefined>>;
+  selectedText: string | undefined;
 };
 
 const ContextMenu = ({
-  isMenuVisible,
-  coords,
+  //positions menu on x and y axis within TextCard
+
+  //gets height and width of menu for adjusting positioning; prevents going over TextCard's rt and bottom borders
   menuRef,
-}: // setMenuWidth,
-ContextMenuPropsType) => {
-  // useEffect(() => {
-  //   const width = menuRef.current?.getBoundingClientRect().width || 200;
-  //   setMenuWidth(width);
-  // }, [isMenuVisible, menuRef, setMenuWidth]);
+  selectedText,
+  setIsDefVisible,
+}: ContextMenuPropsType) => {
+  const { setSearchedWord } = useSearchedWordContext();
+  const { isMenuVisible, setIsMenuVisible, coords } = useContextMenu();
+  const { positionWordDef } = usePositionWordDef();
+  const { setIsVocabListVisible } = useVocabListContext();
+
+  const lookUpWord = async () => {
+    if (selectedText && selectedText.length > 0) {
+      //fetch
+      try {
+        const response = await axios.get(
+          `http://localhost:5000/?keyword=${selectedText}`
+        );
+        //the searched word
+
+        const searchedWord = response.data.data[0].japanese[0].word;
+        console.log(searchedWord);
+
+        //the japanese reading (in hiragana)
+        const reading = response.data.data[0].japanese[0].reading;
+        console.log(reading);
+
+        //the english definitions (in an array)
+        const engDefs = response.data.data[0].senses[0].english_definitions;
+        console.log(engDefs);
+
+        setSearchedWord({
+          word: searchedWord,
+          reading: reading,
+          definition: engDefs,
+        });
+      } catch (error) {
+        console.log(error);
+      }
+
+      //open dialogue
+    } else {
+      console.log("No words were selected.");
+    }
+  };
 
   return (
     <>
-      {isMenuVisible && (
+      <div
+        ref={menuRef}
+        style={{
+          top: !isMenuVisible ? -9999 : coords?.y,
+          left: !isMenuVisible ? -9999 : coords?.x,
+        }}
+        className={` w-[220px] ${
+          isMenuVisible
+            ? "absolute animate-fade-in shadow-md shadow-card-foreground"
+            : "absolute pointer-events-none invisible"
+        }  bg-inkwell-50 border border-inkwell-200 rounded-md shadow-lg md:text-[14px]`}
+      >
         <div
-          ref={menuRef}
-          style={{
-            top: coords.y,
-            left: coords.x,
-            position: "absolute",
+          onClick={(e) => {
+            positionWordDef(e);
+            lookUpWord();
+            setIsDefVisible(true);
+            setIsMenuVisible(false);
           }}
-          className=" w-[200px] absolute bg-secondary-foreground rounded-sm text-[12px] md:text-[14px] py-2 "
+          className="hover:bg-inkwell-100  text-black cursor-pointer pl-8 md:pl-6 py-3 flex items-center gap-3"
         >
-          <div className="hover:bg-gray-700  text-white cursor-pointer pl-8 md:pl-6 py-2 flex items-center gap-3">
-            <span className="material-symbols-outlined">search</span>
-            <p>Look Up Word</p>
-          </div>
-          <div className="hover:bg-gray-700  text-white cursor-pointer pl-8 md:pl-6 py-2 flex items-center gap-3">
-            <span className="material-symbols-outlined">add</span>
-            <p>Add To My Vocab</p>
-          </div>
+          <span className="material-symbols-outlined">search</span>
+          <p>Look Up Word</p>
         </div>
-      )}
+        <div className="hover:bg-inkwell-100  text-black cursor-pointer pl-8 md:pl-6 py-3 flex items-center gap-3">
+          <span className="material-symbols-outlined">add</span>
+          <p>Add To My Vocab</p>
+        </div>
+        <div
+          onClick={() => setIsVocabListVisible(true)}
+          className="hover:bg-inkwell-100  text-black cursor-pointer pl-8 md:pl-6 py-3 flex items-center gap-3"
+        >
+          <span className="material-symbols-outlined">list</span>
+          <p>See Vocab List</p>
+        </div>
+      </div>
     </>
   );
 };
