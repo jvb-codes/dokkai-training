@@ -102,8 +102,9 @@
 .word-definition__close
 {
   background-color: transparent;
-  color: var(--color-inkwell-900);
+  color: var(--color-inkwell-100);
   margin-top: 10px;
+  margin-bottom: 10px;
   margin-right: 10px;
 }
 
@@ -111,12 +112,52 @@
 .vocabListDock__chevron
 {
   background-color: var(--color-inkwell-600);
+
 }
 
 .vocabListContent__add-label,
-.vocabListContent__edit-card
+.vocabListContent__edit-card,
+.vocabListConent__highlight-word
 {
-  color: var(--color-accent-500);
+  color: var(--color-inkwell-400);
   background-color: transparent;
   font-size: 24px;
+
+
 }
+
+/*👉
+.flashcard
+{
+  perspective: 1000px;
+  color: var(--color-inkwell-50);
+
+}
+
+.flashcard-inner
+{
+  text-align: center;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+  background-color: var(--color-inkwell-600);
+
+
+}
+
+.flashcard-front,
+.flashcard-back
+{
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1rem;
+
+
+}
+
+.flashcard-back
+{
+  transform: rotateY(-180deg);
+}👈*/

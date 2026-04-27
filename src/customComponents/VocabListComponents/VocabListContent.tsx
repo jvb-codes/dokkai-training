@@ -1,4 +1,7 @@
-import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
+import {
+  ScrollArea as VocabListScrollArea,
+  ScrollBar as VocabListScrollBar,
+} from "@/components/ui/scroll-area";
 import useVocabListContext from "@/customHooks/useVocabListContext";
 import VocabCard from "./VocabCards";
 
@@ -9,7 +12,7 @@ const VocabListContent = () => {
   return (
     <>
       {isVocabListVisible && (
-        <ScrollArea
+        <VocabListScrollArea
           /*vocabList becomes hidden after it is unmounted, allowing time for "hide" animation to complete */
           onAnimationEnd={() => {
             if (!isMounted) {
@@ -18,11 +21,11 @@ const VocabListContent = () => {
           }}
           className={`w-full bg-inkwell-50 ${
             isMounted ? "animate-reveal" : "animate-hide"
-          } -z-10`}
+          } -z-10 bg-inkwell-600 rounded-md`}
         >
           <VocabCard />
-          <ScrollBar className="p-0" orientation="horizontal" />
-        </ScrollArea>
+          <VocabListScrollBar className="p-0" orientation="horizontal" />
+        </VocabListScrollArea>
       )}
     </>
   );

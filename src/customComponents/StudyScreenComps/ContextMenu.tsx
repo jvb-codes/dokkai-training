@@ -1,8 +1,14 @@
 import useContextMenu from "@/customHooks/useContextMenu";
 import { useSearchedWordContext } from "@/customHooks/useSearchedWordContext";
-import usePositionWordDef from "@/customHooks/usePositionWordDef";
-import axios from "axios";
+
 import useVocabListContext from "@/customHooks/useVocabListContext";
+import { Icon as SearchIcon, Icon as ListIcon } from "../Icon";
+import useWordLookUp from "@/customHooks/useWordLookUp";
+
+import useTagsContext from "@/customHooks/useTagsContext";
+
+import useScreenIdContext from "@/customHooks/useScreenIdContext";
+import useFlashCard from "@/customHooks/useFlashCard";
 
 type ContextMenuPropsType = {
   setIsDefVisible: React.Dispatch<React.SetStateAction<boolean>>;
@@ -16,47 +22,21 @@ const ContextMenu = ({
   //gets height and width of menu for adjusting positioning; prevents going over TextCard's rt and bottom borders
   menuRef,
   selectedText,
-  setIsDefVisible,
 }: ContextMenuPropsType) => {
+  const { lookUpWord } = useWordLookUp();
   const { setSearchedWord } = useSearchedWordContext();
   const { isMenuVisible, setIsMenuVisible, coords } = useContextMenu();
-  const { positionWordDef } = usePositionWordDef();
-  const { setIsVocabListVisible } = useVocabListContext();
 
-  const lookUpWord = async () => {
-    if (selectedText && selectedText.length > 0) {
-      //fetch
-      try {
-        const response = await axios.get(
-          `http://localhost:5000/?keyword=${selectedText}`
-        );
-        //the searched word
+  const {
+    setIsVocabListVisible,
+    setIsDockVisible,
 
-        const searchedWord = response.data.data[0].japanese[0].word;
-        console.log(searchedWord);
-
-        //the japanese reading (in hiragana)
-        const reading = response.data.data[0].japanese[0].reading;
-        console.log(reading);
-
-        //the english definitions (in an array)
-        const engDefs = response.data.data[0].senses[0].english_definitions;
-        console.log(engDefs);
-
-        setSearchedWord({
-          word: searchedWord,
-          reading: reading,
-          definition: engDefs,
-        });
-      } catch (error) {
-        console.log(error);
-      }
-
-      //open dialogue
-    } else {
-      console.log("No words were selected.");
-    }
-  };
+    setIsMounted,
+  } = useVocabListContext();
+  const { setIsTagSelectionPanelVisible } = useTagsContext();
+  const { flashCardsProgress } = useFlashCard();
+  const { vocabList } = useVocabListContext();
+  const { setScreenId } = useScreenIdContext();
 
   return (
     <>
@@ -73,27 +53,52 @@ const ContextMenu = ({
         }  bg-inkwell-50 border border-inkwell-200 rounded-md shadow-lg md:text-[14px]`}
       >
         <div
-          onClick={(e) => {
-            positionWordDef(e);
-            lookUpWord();
-            setIsDefVisible(true);
+          onClick={() => {
+            lookUpWord(selectedText, setSearchedWord);
             setIsMenuVisible(false);
           }}
           className="hover:bg-inkwell-100  text-black cursor-pointer pl-8 md:pl-6 py-3 flex items-center gap-3"
         >
-          <span className="material-symbols-outlined">search</span>
+          <SearchIcon iconName="search" />
           <p>Look Up Word</p>
         </div>
-        <div className="hover:bg-inkwell-100  text-black cursor-pointer pl-8 md:pl-6 py-3 flex items-center gap-3">
-          <span className="material-symbols-outlined">add</span>
-          <p>Add To My Vocab</p>
-        </div>
+
         <div
-          onClick={() => setIsVocabListVisible(true)}
+          onClick={() => {
+            setIsMounted((prev) => !prev);
+            setIsVocabListVisible(true);
+          }}
           className="hover:bg-inkwell-100  text-black cursor-pointer pl-8 md:pl-6 py-3 flex items-center gap-3"
         >
-          <span className="material-symbols-outlined">list</span>
+          <ListIcon iconName="list" />
           <p>See Vocab List</p>
+        </div>
+        <div
+          onClick={() => {
+            setIsMounted((prev) => !prev);
+            flashCardsProgress.makeDefaultFlashcardStack(
+              vocabList,
+              setScreenId,
+            );
+          }}
+          className="hover:bg-inkwell-100  text-black cursor-pointer pl-8 md:pl-6 py-3 flex items-center gap-3"
+        >
+          <ListIcon iconName="list" />
+          <p>Study Flashcards</p>
+        </div>
+        <div
+          onClick={() => {
+            setIsDockVisible(false);
+            setIsVocabListVisible(false);
+            setIsTagSelectionPanelVisible({
+              visible: true,
+              action: "createFlashcardStack",
+            });
+          }}
+          className="hover:bg-inkwell-100  text-black cursor-pointer pl-8 md:pl-6 py-3 flex items-center gap-3"
+        >
+          <ListIcon iconName="cards_stack" />
+          <p>Customize Flashcards</p>
         </div>
       </div>
     </>

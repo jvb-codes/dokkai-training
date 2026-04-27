@@ -8,24 +8,53 @@ import {
   ToastContext,
   VocabListContext,
   TagsContext,
-  EntryEditContext,
+  ExpandedCardContext,
+  FlashCardContext,
+  DialogContext,
+  type IsTagSelectionPanelVisibleType,
+  type StudySessionType,
+  type DialogType,
 } from "@/context";
-import type { ReactNode } from "react";
-import {
-  vocabList as dummyList,
-  type VocabEntryType,
-  type VocabListType,
-} from "./data/vocabList";
+import type { ReactNode, JSX } from "react";
+import { type VocabEntryType } from "./data/vocabList";
+import { usePastedTextContext } from "./customHooks/usePastedTextContext";
 
 export const PastedTextContextProvider = ({
   children,
 }: {
   children: ReactNode;
 }) => {
-  const [pastedText, setPastedText] = useState("");
+  const [prevSession, setPrevSession] = useState<StudySessionType | null>(null);
+  const [pastedText, setPastedText] = useState<string>(
+    prevSession ? prevSession.text : "",
+  );
+  const [isPastedTextHighlighted, setIsPastedTextHighlighted] = useState(false);
+  const [pastedTextWithHighlights, setPastedTextWithHighlights] = useState<
+    (string | JSX.Element)[]
+  >([]);
+  const [highlightedWords, setHighlightedWords] = useState<string[]>([]);
+  const [pastedTextError, setPastedTextError] = useState<string>("");
+  const [isNewSession, setIsNewSession] = useState(false);
 
   return (
-    <PastedTextContext.Provider value={{ pastedText, setPastedText }}>
+    <PastedTextContext.Provider
+      value={{
+        pastedText,
+        setPastedText,
+        isPastedTextHighlighted,
+        setIsPastedTextHighlighted,
+        pastedTextWithHighlights,
+        setPastedTextWithHighlights,
+        highlightedWords,
+        setHighlightedWords,
+        pastedTextError,
+        setPastedTextError,
+        prevSession,
+        setPrevSession,
+        isNewSession,
+        setIsNewSession,
+      }}
+    >
       {children}
     </PastedTextContext.Provider>
   );
@@ -51,16 +80,22 @@ export const SearchedWordProvider = ({ children }: { children: ReactNode }) => {
     reading: string;
     definition: string[];
   };
-  const [searchedWord, setSearchedWord] = useState<
-    SearchedWordType | undefined
-  >(undefined);
+  const [searchedWord, setSearchedWord] = useState<SearchedWordType>();
   const [selectedText, setSelectedText] = useState<string | undefined>(
-    undefined
+    undefined,
   );
+  const [isLookingUpWord, setIsLookingUpWord] = useState<boolean>(false);
 
   return (
     <SearchedWordContext.Provider
-      value={{ selectedText, setSelectedText, searchedWord, setSearchedWord }}
+      value={{
+        selectedText,
+        setSelectedText,
+        searchedWord,
+        setSearchedWord,
+        isLookingUpWord,
+        setIsLookingUpWord,
+      }}
     >
       {children}
     </SearchedWordContext.Provider>
@@ -109,33 +144,13 @@ export const WordDefContextProvider = ({
 }: {
   children: ReactNode;
 }) => {
-  type WordDefCoordsType = {
-    x: number;
-    y: number;
-  };
-
-  const [wordDefCoords, setWordDefCoords] = useState<
-    WordDefCoordsType | undefined
-  >({
-    x: -9999,
-    y: -9999,
-  });
   const [isDefVisible, setIsDefVisible] = useState(false);
-  const [grabOffset, setGrabOffset] = useState<WordDefCoordsType | undefined>(
-    undefined
-  );
-  const wordDefWindowRef = useRef<HTMLDivElement | null>(null);
 
   return (
     <WordDefContext.Provider
       value={{
-        wordDefCoords,
-        setWordDefCoords,
         isDefVisible,
         setIsDefVisible,
-        grabOffset,
-        setGrabOffset,
-        wordDefWindowRef,
       }}
     >
       {children}
@@ -161,12 +176,16 @@ export const ToastContextProvider = ({ children }: { children: ReactNode }) => {
 //SECTION - VocabList
 
 export const VocabListProvider = ({ children }: { children: ReactNode }) => {
-  const [vocabList, setVocabList] = useState<VocabListType>(dummyList);
+  const { prevSession } = usePastedTextContext();
+  const [vocabList, setVocabList] = useState<VocabEntryType[]>(
+    prevSession ? prevSession.vocabList : [],
+  );
   const [isVocabListVisible, setIsVocabListVisible] = useState(false);
   const [isDockVisible, setIsDockVisible] = useState(true);
   const [lastEntryIsVisible, setLastEntryIsVisible] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
   const lastEntryRef = useRef(null);
+  const [isTagSelectionVisible, setIsTagSelectionVisible] = useState(false);
 
   return (
     <VocabListContext.Provider
@@ -182,6 +201,8 @@ export const VocabListProvider = ({ children }: { children: ReactNode }) => {
         setIsMounted,
         isDockVisible,
         setIsDockVisible,
+        isTagSelectionVisible,
+        setIsTagSelectionVisible,
       }}
     >
       {children}
@@ -192,24 +213,62 @@ export const VocabListProvider = ({ children }: { children: ReactNode }) => {
 //SECTION - TagsContext
 
 export const TagsContextProvider = ({ children }: { children: ReactNode }) => {
-  const [clickedVocabCard, setClickedVocabCard] = useState<
-    VocabEntryType | undefined
-  >(undefined);
+  const clickedVocabCardInitialValues = {
+    id: 0,
+    word: "",
+    reading: "",
+    definition: "",
+    tags: [],
+    isHighlight: false,
+    wordHighlightKey: "",
+    isKnown: false,
+  };
+  const [clickedVocabCard, setClickedVocabCard] = useState<VocabEntryType>(
+    clickedVocabCardInitialValues,
+  );
+  const [clickedVocabCardDefaults, setClickedVocabCardDefaults] =
+    useState<VocabEntryType>(clickedVocabCardInitialValues);
   const [allTags, setAllTags] = useState<string[]>([]);
   const [isTagListVisible, setIsTagListVisible] = useState(false);
+  const [isTagSelectionPanelVisible, setIsTagSelectionPanelVisible] =
+    useState<IsTagSelectionPanelVisibleType>({
+      visible: false,
+      action: null,
+    });
   const [searchedTag, setSearchedTag] = useState("");
+  const [tagsPageNum, setTagsPageNum] = useState(1);
+  const [tagsGroupNum, setTagsGroupNum] = useState(1);
+  const [clickedTags, setClickedTags] = useState<string[]>([]);
+  const [tags, setTags] = useState<string[] | null>(null);
+  const [tagsSelectionError, setTagsSelectionError] = useState<string | null>(
+    null,
+  );
 
   return (
     <TagsContext.Provider
       value={{
         clickedVocabCard,
         setClickedVocabCard,
+        clickedVocabCardDefaults,
+        setClickedVocabCardDefaults,
         isTagListVisible,
         setIsTagListVisible,
         searchedTag,
         setSearchedTag,
         allTags,
         setAllTags,
+        tagsPageNum,
+        setTagsPageNum,
+        tagsGroupNum,
+        setTagsGroupNum,
+        clickedTags,
+        setClickedTags,
+        isTagSelectionPanelVisible,
+        setIsTagSelectionPanelVisible,
+        tags,
+        setTags,
+        tagsSelectionError,
+        setTagsSelectionError,
       }}
     >
       {children}
@@ -217,20 +276,88 @@ export const TagsContextProvider = ({ children }: { children: ReactNode }) => {
   );
 };
 
-//SECTION - EntryEditContext
+//SECTION - ExpandedCardContext
 
-export const EntryEditContextProvider = ({
+export const ExpandedCardContextProvider = ({
   children,
 }: {
   children: ReactNode;
 }) => {
-  const [isEntryEditVisible, setIsEntryEditVisible] = useState(false);
+  const [isExpandedCardVisible, setIsExpandedCardVisible] = useState(false);
+  const [isInEditMode, setIsInEditMode] = useState(false);
+  const [isEntryEdited, setIsEntryEdited] = useState({
+    word: false,
+    reading: false,
+    meaning: false,
+  });
 
   return (
-    <EntryEditContext.Provider
-      value={{ isEntryEditVisible, setIsEntryEditVisible }}
+    <ExpandedCardContext.Provider
+      value={{
+        isExpandedCardVisible,
+        setIsExpandedCardVisible,
+        isInEditMode,
+        setIsInEditMode,
+        isEntryEdited,
+        setIsEntryEdited,
+      }}
     >
       {children}
-    </EntryEditContext.Provider>
+    </ExpandedCardContext.Provider>
+  );
+};
+
+//SECTION - FlashCardContext
+
+export const FlashCardContextProvider = ({
+  children,
+}: {
+  children: ReactNode;
+}) => {
+  const [isFlipped, setIsFlipped] = useState(false);
+  const [currentCardIndex, setCurrentCardIndex] = useState(0);
+  const [words, setWords] = useState<VocabEntryType[]>([]);
+  const [knownWords, setKnownWords] = useState<VocabEntryType[]>([]);
+
+  return (
+    <FlashCardContext.Provider
+      value={{
+        isFlipped,
+        setIsFlipped,
+        currentCardIndex,
+        setCurrentCardIndex,
+        words,
+        setWords,
+        knownWords,
+        setKnownWords,
+      }}
+    >
+      {children}
+    </FlashCardContext.Provider>
+  );
+};
+export const DialogContextProvider = ({
+  children,
+}: {
+  children: ReactNode;
+}) => {
+  const dialogDefaults = {
+    cardId: null,
+    type: "",
+    isOpen: false,
+    title: "",
+    message: "",
+  };
+  const [dialog, setDialog] = useState<DialogType>(dialogDefaults);
+
+  return (
+    <DialogContext.Provider
+      value={{
+        dialog,
+        setDialog,
+      }}
+    >
+      {children}
+    </DialogContext.Provider>
   );
 };

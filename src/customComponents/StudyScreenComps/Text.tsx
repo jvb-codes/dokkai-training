@@ -1,4 +1,7 @@
-import { Card, CardContent } from "@/components/ui/card";
+import {
+  Card as TextCard,
+  CardContent as TextCardContent,
+} from "@/components/ui/card";
 import { usePastedTextContext } from "@/customHooks/usePastedTextContext";
 import ContextMenu from "./ContextMenu";
 import usePositionContextMenu from "@/customHooks/usePositionContextMenu";
@@ -6,20 +9,25 @@ import WordDefinition from "./WordDefinition";
 import useWordDefinitionContext from "@/customHooks/useWordDefinitionContext";
 import { useSearchedWordContext } from "@/customHooks/useSearchedWordContext";
 import useContextMenu from "@/customHooks/useContextMenu";
-import usePositionWordDef from "@/customHooks/usePositionWordDef";
 
-const TextCard = () => {
+import { useEffect } from "react";
+import useLocalStorage from "@/customHooks/useLocalStorage";
+import useVocabListContext from "@/customHooks/useVocabListContext";
+
+const Text = () => {
   const { selectedText, setSelectedText, setSearchedWord } =
     useSearchedWordContext();
-  const { pastedText } = usePastedTextContext();
-  const { setIsMenuVisible, coords } = useContextMenu();
+  const { pastedText, pastedTextWithHighlights, isPastedTextHighlighted } =
+    usePastedTextContext();
+  const { setIsMenuVisible } = useContextMenu();
   const { positionContextMenu } = usePositionContextMenu();
-  const { positionWordDefFromDrop } = usePositionWordDef();
+
   const { cardRef, menuRef } = useContextMenu();
+  const { setLocalStorage } = useLocalStorage();
+  const { vocabList } = useVocabListContext();
 
   //word definition card variables
-  const { setIsDefVisible, wordDefWindowRef, grabOffset } =
-    useWordDefinitionContext();
+  const { setIsDefVisible } = useWordDefinitionContext();
 
   const getSelectedText = () => {
     const selectedText = getSelection()?.toString();
@@ -33,33 +41,14 @@ const TextCard = () => {
     e.preventDefault();
   };
 
-  const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
-    e.preventDefault();
+  useEffect(() => {
+    setLocalStorage(pastedText as string, vocabList);
+  }, [vocabList]);
 
-    if (cardRef.current && coords && wordDefWindowRef.current && grabOffset) {
-      const rect = cardRef.current.getBoundingClientRect();
-      //at drop
-      const dropPosition = { x: e.pageX - rect.left, y: e.pageY - rect.top };
-
-      //dropped position - previous position = the difference in distance between positions
-      const dropAndPrevPosDifference = {
-        x: dropPosition.x - coords.x,
-        y: dropPosition.y - coords.y,
-      };
-
-      const newCoords = {
-        x: coords.x + dropAndPrevPosDifference.x - grabOffset.x,
-        y: coords.y + dropAndPrevPosDifference.y - grabOffset.y,
-      };
-
-      positionWordDefFromDrop(newCoords);
-    }
-  };
   return (
     <>
-      <Card
+      <TextCard
         onDragOver={(e) => handleDragOver(e)}
-        onDrop={(e) => handleDrop(e)}
         onClick={() => {
           setIsMenuVisible(false);
 
@@ -78,18 +67,22 @@ const TextCard = () => {
           positionContextMenu(e);
         }}
       >
-        <CardContent className="relative leading-8">
-          <p>{pastedText}</p>
-        </CardContent>
+        <TextCardContent className="relative leading-8">
+          {isPastedTextHighlighted ? (
+            <p>{pastedTextWithHighlights}</p>
+          ) : (
+            <p>{pastedText}</p>
+          )}
+        </TextCardContent>
         <WordDefinition />
         <ContextMenu
           setIsDefVisible={setIsDefVisible}
           menuRef={menuRef}
           selectedText={selectedText}
         />
-      </Card>
+      </TextCard>
     </>
   );
 };
 
-export default TextCard;
+export default Text;

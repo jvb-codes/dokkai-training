@@ -1,16 +1,34 @@
 import "./App.css";
+import Flashcards from "./customComponents/Flashcards/Flashcards";
 import StartScreen from "./customComponents/StartScreen";
 import StudyScreen from "./customComponents/StudyScreenComps/StudyScreen";
-import { PastedTextContextProvider, SearchedWordProvider } from "./provider";
+
+import {
+  DialogContextProvider,
+  FlashCardContextProvider,
+  PastedTextContextProvider,
+  SearchedWordProvider,
+  TagsContextProvider,
+  VocabListProvider,
+} from "./provider";
 
 function App() {
   return (
-    <div className="">
+    <div>
       <PastedTextContextProvider>
         <StartScreen />
-        <SearchedWordProvider>
-          <StudyScreen />
-        </SearchedWordProvider>
+        <DialogContextProvider>
+          <SearchedWordProvider>
+            <VocabListProvider>
+              <TagsContextProvider>
+                <FlashCardContextProvider>
+                  <Flashcards />
+                  <StudyScreen />
+                </FlashCardContextProvider>
+              </TagsContextProvider>
+            </VocabListProvider>
+          </SearchedWordProvider>
+        </DialogContextProvider>
       </PastedTextContextProvider>
     </div>
   );

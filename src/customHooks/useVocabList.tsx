@@ -1,96 +1,93 @@
-import type { VocabListType } from "@/data/vocabList";
-import useToastContext from "./useToastContext";
+import type { VocabEntryType } from "@/data/vocabList";
+import type { SearchedWordType } from "@/context";
 import useVocabListContext from "./useVocabListContext";
+import useLocalStorage from "./useLocalStorage";
+import { usePastedTextContext } from "./usePastedTextContext";
+import { toast } from "sonner";
+import useDialogContext from "./useDialogContext";
+import { useSearchedWordContext } from "./useSearchedWordContext";
 
 const useVocabList = () => {
-  //From VocabContext
-  const { setVocabList } = useVocabListContext();
-  //From ToastContext
-  const { setToastMsg, setIsToastVisible } = useToastContext();
+  const { vocabList, setVocabList } = useVocabListContext();
 
-  const openToast = (message: string | "") => {
-    setToastMsg(message);
-    setIsToastVisible(true);
-  };
+  const { setLocalStorage } = useLocalStorage();
 
-  const checkDoesWordExist = (
-    wordList: VocabListType,
-    selection: string | number
+  const { pastedText } = usePastedTextContext();
+
+  const { setDialog } = useDialogContext();
+
+  const { setSearchedWord } = useSearchedWordContext();
+
+  const doesExistInList = (
+    vocabList: VocabEntryType[],
+    searchedWord: SearchedWordType,
   ) => {
-    const result = wordList.find((wordEntry) => {
-      if (typeof selection === "string") {
-        return wordEntry.word === selection;
-      }
-      if (typeof selection === "number") {
-        return wordEntry.id === selection;
-      }
-    });
-    return result;
+    return vocabList.find((entry) => entry.word === searchedWord.word);
   };
 
-  const addWord = (wordList: VocabListType, selectedText: string) => {
-    const doesExist = checkDoesWordExist(wordList, selectedText);
+  const createWordHighlightKey = (word: string) => {
+    const wordEnding = word[word.length - 1];
+    const verbEndings = ["う", "く", "ぐ", "す", "つ", "ぬ", "ぶ", "む", "る"];
 
-    if (!doesExist) {
-      const msg = `${selectedText} is already on your list.`;
+    if (verbEndings.includes(wordEnding)) {
+      return word.charAt(0);
+    } else return word;
+  };
 
-      openToast(msg);
+  const addWord = (
+    searchedWord: SearchedWordType,
+    setVocabList: React.Dispatch<React.SetStateAction<VocabEntryType[]>>,
+  ) => {
+    const newEntry: VocabEntryType = {
+      id: Date.now(),
+      ...searchedWord,
+      tags: [],
+      isKnown: false,
+      isHighlight: false,
+      wordHighlightKey: createWordHighlightKey(searchedWord.word),
+    };
+
+    if (doesExistInList(vocabList, searchedWord)) {
+      setDialog({
+        type: "duplicate",
+        isOpen: true,
+        title: "This looks familiar",
+        message: "You've already added this word to your vocabulary list.",
+      });
+    } else {
+      setVocabList([...vocabList, newEntry]);
+      toast.success("Word added", {
+        position: "top-center",
+        duration: 2500,
+      });
     }
 
-    if (wordList && doesExist) {
-      const newEntry = {
-        id: wordList.length + 1,
-        word: "",
-        reading: "",
-        meaning: "",
-        tags: [],
-      };
-      setVocabList((prev) => [...prev, newEntry]);
-    }
+    setSearchedWord(undefined);
   };
 
-  const deleteWord = (
-    wordList: VocabListType,
-    ev: React.MouseEvent<HTMLElement>
-  ) => {
-    const indexOfClickedWord = ev.target.id;
-
-    const update = wordList.filter(
-      (wordEntry) => wordEntry.id !== indexOfClickedWord
-    );
-
-    setVocabList(update);
-  };
-
-  const updateTags = (
-    wordList: VocabListType,
-    ev: React.MouseEvent<HTMLElement>,
-    newTag: string
-  ) => {
-    const id = ev.target.id;
-    const update = wordList.map((wordEntry) => {
-      if (wordEntry.id === id) {
-        wordEntry.tags = [...wordEntry.tags, newTag];
-      }
-      return wordEntry;
+  const deleteWord = (id: number) => {
+    const update = vocabList.filter((entry) => {
+      return entry.id !== id;
     });
     setVocabList(update);
+    if (pastedText) setLocalStorage(pastedText, vocabList);
   };
 
-  // useEffect(() => {
-  //   if (isVocabListVisible && lastEntryRef.current) {
-  //     //IntersectionObserver is used to determine whether the last card in the vocabList is visible in the viewport.
-  //     const observer = new IntersectionObserver((entries) => {
-  //       const entry = entries[0];
-  //       //if last card is visible, isIntersecting === true, otherwise === false.
-  //       setLastEntryIsVisible(entry.isIntersecting);
-  //     });
-  //     //watches the last card
-  //     observer.observe(lastEntryRef.current);
-  //   }
-  // }, [isVocabListVisible, lastEntryRef, setLastEntryIsVisible]);
+  const updateVocabList = (
+    id: number,
+    vocabCards: VocabEntryType[],
+    vocabCard: VocabEntryType,
+    setNewVocabCards: React.Dispatch<React.SetStateAction<VocabEntryType[]>>,
+  ) => {
+    const updatedCards = vocabCards.map((card) => {
+      if (card.id === id) {
+        return vocabCard;
+      } else return card;
+    });
+    setNewVocabCards(updatedCards);
+  };
 
-  return { checkDoesWordExist, addWord, deleteWord, updateTags };
+  return { addWord, updateVocabList, deleteWord };
 };
 
 export default useVocabList;
