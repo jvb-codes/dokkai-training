@@ -1,69 +1,85 @@
-# React + TypeScript + Vite
+# Dokkai Training
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A React + TypeScript application for improving Japanese reading comprehension and vocabulary through interactive text, highlighting, and flashcard-based study.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Screenshots
 
-## Expanding the ESLint configuration
+![Start Screen](./src/assets/screenshots/startNewText.png)
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+![Text Screen](./src/assets/screenshots/textScreen.png)
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+![Word Look Up Screen](./src/assets/screenshots/wordLookUp.png)
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+![Highight Word Screen](./src/assets/screenshots/highlightWord.png)
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+![Vocab Edit Screen](./src/assets/screenshots/vocabEdit.png)
+
+![Flashcard Screen](./src/assets/screenshots/flashcard.png)
+
+## Features
+
+- Paste and interact with text for reading practice
+- Highlight words directly in the text
+- Save selected vocabulary items
+- Create custom flashcard stacks
+- Study using a flashcard system
+- Filter vocabulary by tags
+- Automatically save sessions using local storage
+- Look up word definitions via API
+
+---
+
+## Tech Stack
+
+- React 19
+- TypeScript
+- Vite
+- Tailwind CSS
+- Axios (API requests)
+- Express (backend support)
+
+---
+
+## Installation
+
+```bash
+git clone https://github.com/yourname/dokkai-training.git
+cd dokkai-training
+npm install
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Usage
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+- Start a new session
+- Paste text into the app
+- Highlight words while reading
+- Add words to your vocabulary list
+- Create a flashcard stack
+- Study using flashcards
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+---
+
+## Core Functionality (Custom Hooks)
+
+- usePastedText → manages input text and session data
+- useHighlight → handles word highlighting logic
+- useVocabList → manages saved vocabulary
+- useFlashCard → controls flashcard behavior
+- useHandleFlashcardStackCreation → builds study stacks
+- useTagSelection → filters vocabulary by tags
+- useWordLookUp → fetches definitions
+- useLocalStorage → persists data
+- usePositionContextMenu → positions right-click menu
+- usePreventOverflow → keeps UI elements within bounds
+
+---
+
+## Future Improvements
+
+- Improve UI/UX for mobile devices
+- Add spaced repetition system
+- Enhance word highlighting accuracy
+- Add progress tracking
