@@ -1,13 +1,13 @@
-import useContextMenu from "@/customHooks/useContextMenu";
-import { useSearchedWordContext } from "@/customHooks/useSearchedWordContext";
+import useContextMenu from "@/contexts/useContextHooks/useContextMenuContext";
+import { useSearchedWordContext } from "@/contexts/useContextHooks/useSearchedWordContext";
 
-import useVocabListContext from "@/customHooks/useVocabListContext";
+import useVocabListContext from "@/contexts/useContextHooks/useVocabListContext";
 import { Icon as SearchIcon, Icon as ListIcon } from "../Icon";
 import useWordLookUp from "@/customHooks/useWordLookUp";
 
-import useTagsContext from "@/customHooks/useTagsContext";
+import useTagsContext from "@/contexts/useContextHooks/useTagsContext";
 
-import useScreenIdContext from "@/customHooks/useScreenIdContext";
+import useDisplayIdContext from "@/contexts/useContextHooks/useDisplayIdContext";
 import useFlashCard from "@/customHooks/useFlashCard";
 
 type ContextMenuPropsType = {
@@ -36,7 +36,7 @@ const ContextMenu = ({
   const { setIsTagSelectionPanelVisible } = useTagsContext();
   const { flashCardsProgress } = useFlashCard();
   const { vocabList } = useVocabListContext();
-  const { setScreenId } = useScreenIdContext();
+  const { setScreenId } = useDisplayIdContext();
 
   return (
     <>

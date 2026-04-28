@@ -1,10 +1,10 @@
 import { Button } from "@/components/ui/button";
 import useLocalStorage from "@/customHooks/useLocalStorage";
-import { usePastedTextContext } from "@/customHooks/usePastedTextContext";
-import useScreenIdContext from "@/customHooks/useScreenIdContext";
+import { usePastedTextContext } from "@/contexts/useContextHooks/usePastedTextContext";
+import useDisplayIdContext from "@/contexts/useContextHooks/useDisplayIdContext";
 
 const StartScreenOptions = () => {
-  const { setScreenId } = useScreenIdContext();
+  const { setScreenId } = useDisplayIdContext();
   const { setPastedText, prevSession, setPrevSession } = usePastedTextContext();
   const { clearLocalStorage } = useLocalStorage();
 

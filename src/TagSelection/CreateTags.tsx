@@ -1,4 +1,4 @@
-import useTagsContext from "@/customHooks/useTagsContext";
+import useTagsContext from "@/contexts/useContextHooks/useTagsContext";
 import TagGrid from "./TagGrid";
 
 const CreateTags = () => {

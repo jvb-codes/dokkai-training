@@ -1,4 +1,4 @@
-import useTagsContext from "@/customHooks/useTagsContext";
+import useTagsContext from "@/contexts/useContextHooks/useTagsContext";
 import useTagSelection from "@/customHooks/useTagSelection";
 
 const SearchTagInput = () => {

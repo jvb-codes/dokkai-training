@@ -1,10 +1,10 @@
-import useScreenIdContext from "@/customHooks/useScreenIdContext";
+import useDisplayIdContext from "@/contexts/useContextHooks/useDisplayIdContext";
 import Front from "./Front";
 import Back from "./Back";
-import { useFlashCardContext } from "@/customHooks/useFlashCardContext";
+import { useFlashCardContext } from "@/contexts/useContextHooks/useFlashCardContext";
 
 const Flashcards = () => {
-  const { screenId } = useScreenIdContext();
+  const { screenId } = useDisplayIdContext();
   const { isFlipped } = useFlashCardContext();
 
   return (

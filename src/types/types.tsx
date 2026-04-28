@@ -1,8 +1,15 @@
-import { createContext } from "react";
 import type { JSX, SetStateAction } from "react";
-import { type VocabEntryType } from "./data/vocabList";
 
-//SECTION - PastedTextContext
+export type VocabEntryType = {
+  id: number;
+  word: string;
+  reading?: string;
+  definition?: string | string[];
+  tags?: string[];
+  isHighlight?: boolean;
+  wordHighlightKey?: string;
+  isKnown?: boolean;
+};
 
 export type HighlightedWordsType = {
   id: number;
@@ -15,7 +22,7 @@ export type StudySessionType = {
   vocabList: VocabEntryType[];
 };
 
-type PastedTextContextType = {
+export type PastedTextContextType = {
   pastedText: string;
   setPastedText: React.Dispatch<SetStateAction<string>>;
   isPastedTextHighlighted: boolean;
@@ -34,27 +41,17 @@ type PastedTextContextType = {
   setIsNewSession: React.Dispatch<SetStateAction<boolean>>;
 };
 
-export const PastedTextContext = createContext<
-  PastedTextContextType | undefined
->(undefined);
-
-//SECTION - ScreenIdContext
-
-type ScreenIdContextType = {
+export type DisplayIdContextType = {
   screenId: number;
   setScreenId: React.Dispatch<SetStateAction<number>>;
 };
 
-export const ScreenIdContext = createContext<ScreenIdContextType | undefined>(
-  undefined,
-);
-
-//SECTION - SearchedWordContext
 export type SearchedWordType = {
   word: string;
   reading: string;
   definition: string[];
 };
+
 export type SearchedWordContextType = {
   selectedText: string | undefined;
   setSelectedText: React.Dispatch<SetStateAction<string | undefined>>;
@@ -64,18 +61,12 @@ export type SearchedWordContextType = {
   setIsLookingUpWord: React.Dispatch<SetStateAction<boolean>>;
 };
 
-export const SearchedWordContext = createContext<
-  SearchedWordContextType | undefined
->(undefined);
-
-//SECTION - ContextMenuContext
-
-type CoordsType = {
+export type CoordsType = {
   x: number;
   y: number;
 };
 
-type ContextMenuContextType = {
+export type ContextMenuContextType = {
   coords: CoordsType | undefined;
   setCoords: React.Dispatch<SetStateAction<CoordsType | undefined>>;
   isMenuVisible: boolean;
@@ -84,37 +75,19 @@ type ContextMenuContextType = {
   menuRef: React.RefObject<HTMLDivElement | null>;
 };
 
-export const ContextMenuContext = createContext<
-  ContextMenuContextType | undefined
->(undefined);
-
-//SECTION - WordDefContext
-
-type WordDefContextType = {
+export type WordDefContextType = {
   isDefVisible: boolean;
   setIsDefVisible: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-export const WordDefContext = createContext<WordDefContextType | undefined>(
-  undefined,
-);
-
-//SECTION - ToastContext
-
-type ToastContextType = {
+export type ToastContextType = {
   toastMsg: string;
   setToastMsg: React.Dispatch<React.SetStateAction<string>>;
   isToastVisible: boolean;
   setIsToastVisible: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-export const ToastContext = createContext<ToastContextType | undefined>(
-  undefined,
-);
-
-//SECTION - VocabListContext
-
-type VocabListContextType = {
+export type VocabListContextType = {
   vocabList: VocabEntryType[];
   setVocabList: React.Dispatch<React.SetStateAction<VocabEntryType[]>>;
   isVocabListVisible: boolean;
@@ -130,18 +103,12 @@ type VocabListContextType = {
   setIsTagSelectionVisible: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-export const VocabListContext = createContext<VocabListContextType | undefined>(
-  undefined,
-);
-
-//SECTION - TagsContext
-
 export type IsTagSelectionPanelVisibleType = {
   visible: boolean;
   action: "createFlashcardStack" | "createTags" | null;
 };
 
-type TagsContextType = {
+export type TagsContextType = {
   tags: string[] | null;
   setTags: React.Dispatch<React.SetStateAction<string[] | null>>;
   clickedVocabCard: VocabEntryType;
@@ -170,19 +137,13 @@ type TagsContextType = {
   setTagsSelectionError: React.Dispatch<React.SetStateAction<string | null>>;
 };
 
-export const TagsContext = createContext<TagsContextType | undefined>(
-  undefined,
-);
-
-//SECTION - ExpandedCardContext
-
 type IsEntryEditedType = {
   word: boolean;
   reading: boolean;
   meaning: boolean;
 };
 
-type EntryEditType = {
+export type EntryEditType = {
   isExpandedCardVisible: boolean;
   setIsExpandedCardVisible: React.Dispatch<React.SetStateAction<boolean>>;
   isInEditMode: boolean;
@@ -191,13 +152,7 @@ type EntryEditType = {
   setIsEntryEdited: React.Dispatch<React.SetStateAction<IsEntryEditedType>>;
 };
 
-export const ExpandedCardContext = createContext<EntryEditType | undefined>(
-  undefined,
-);
-
-//SECTION - FlashCardContext
-
-type FlashCardType = {
+export type FlashCardType = {
   isFlipped: boolean;
   setIsFlipped: React.Dispatch<React.SetStateAction<boolean>>;
   currentCardIndex: number;
@@ -208,10 +163,6 @@ type FlashCardType = {
   setKnownWords: React.Dispatch<React.SetStateAction<VocabEntryType[]>>;
 };
 
-export const FlashCardContext = createContext<FlashCardType | undefined>(
-  undefined,
-);
-
 export type DialogType = {
   cardId?: number | null;
   type: string;
@@ -220,11 +171,7 @@ export type DialogType = {
   message: string;
 };
 
-type DialogContextType = {
+export type DialogContextType = {
   dialog: DialogType;
   setDialog: React.Dispatch<React.SetStateAction<DialogType>>;
 };
-
-export const DialogContext = createContext<DialogContextType | undefined>(
-  undefined,
-);

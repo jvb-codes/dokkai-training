@@ -1,13 +1,13 @@
 import ScreenContainer from "./ScreenContainer";
-import useScreenIdContext from "@/customHooks/useScreenIdContext";
+import useDisplayIdContext from "@/contexts/useContextHooks/useDisplayIdContext";
 import StartScreenOptions from "./StartScreenOptions";
-import { usePastedTextContext } from "@/customHooks/usePastedTextContext";
+import { usePastedTextContext } from "@/contexts/useContextHooks/usePastedTextContext";
 import useLocalStorage from "@/customHooks/useLocalStorage";
 import { useEffect } from "react";
 import NewSession from "./NewSession";
 
 const StartScreen = () => {
-  const { screenId } = useScreenIdContext();
+  const { screenId } = useDisplayIdContext();
   const { prevSession, setPrevSession } = usePastedTextContext();
 
   const { getLocalStorge } = useLocalStorage();

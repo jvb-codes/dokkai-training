@@ -1,4 +1,4 @@
-import useTagsContext from "@/customHooks/useTagsContext";
+import useTagsContext from "@/contexts/useContextHooks/useTagsContext";
 import { CheckBox } from "../CheckBox";
 import useHandleClickedVocabCard from "@/customHooks/useHandleClickedVocabCard";
 import useHandleFlashcardStackCreation from "@/customHooks/useHandleFlashcardStackCreation";

@@ -6,17 +6,17 @@ import {
   CardHeader as WordDefCardHeader,
   CardFooter as WordDefCardFooter,
 } from "@/components/ui/card";
-import { useSearchedWordContext } from "@/customHooks/useSearchedWordContext";
-import useWordDefinitionContext from "@/customHooks/useWordDefinitionContext";
+import { useSearchedWordContext } from "@/contexts/useContextHooks/useSearchedWordContext";
+import useWordDefContext from "@/contexts/useContextHooks/useWordDefContext";
 import useVocabList from "@/customHooks/useVocabList";
 
-import useVocabListContext from "@/customHooks/useVocabListContext";
+import useVocabListContext from "@/contexts/useContextHooks/useVocabListContext";
 import Fallback from "../Fallback";
 
 const WordDefinition = () => {
   const { searchedWord, setSearchedWord, isLookingUpWord } =
     useSearchedWordContext();
-  const { setIsDefVisible } = useWordDefinitionContext();
+  const { setIsDefVisible } = useWordDefContext();
 
   const { addWord } = useVocabList();
 

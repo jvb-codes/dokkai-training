@@ -1,5 +1,5 @@
 import ExpandedVocabCardContainer from "./ExpandedVocabCardContainer";
-import { useExpandedCardContext } from "@/customHooks/useEntryEditContext";
+import { useExpandedCardContext } from "@/contexts/useContextHooks/useExpandedCardContext";
 import EditMode from "./EditMode";
 import ReadMode from "./ReadMode";
 

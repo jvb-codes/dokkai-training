@@ -1,6 +1,6 @@
 import useHandleClickedVocabCard from "@/customHooks/useHandleClickedVocabCard";
-import useTagsContext from "@/customHooks/useTagsContext";
-import useVocabListContext from "@/customHooks/useVocabListContext";
+import useTagsContext from "@/contexts/useContextHooks/useTagsContext";
+import useVocabListContext from "@/contexts/useContextHooks/useVocabListContext";
 import Kanji from "./Kanji";
 import Hiragana from "./Hiragana";
 import English from "./English";
@@ -12,9 +12,9 @@ import {
   Icon as ToggleHighlightOff,
   Icon as DeleteCard,
 } from "../Icon";
-import { useExpandedCardContext } from "@/customHooks/useEntryEditContext";
+import { useExpandedCardContext } from "@/contexts/useContextHooks/useExpandedCardContext";
 import useHighlight from "@/customHooks/useHighlight";
-import useDialogContext from "@/customHooks/useDialogContext";
+import useDialogContext from "@/contexts/useContextHooks/useDialogContext";
 
 const VocabCards = () => {
   const { vocabList, setIsDockVisible, setIsVocabListVisible } =
@@ -24,6 +24,8 @@ const VocabCards = () => {
   const { highlight } = useHighlight();
   const { setIsExpandedCardVisible } = useExpandedCardContext();
   const { setDialog } = useDialogContext();
+
+  console.log(vocabList);
 
   return (
     <>

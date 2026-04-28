@@ -1,4 +1,4 @@
-import useTagsContext from "@/customHooks/useTagsContext";
+import useTagsContext from "@/contexts/useContextHooks/useTagsContext";
 import type { PropsWithChildren } from "react";
 
 const TagsContainer = ({ children }: PropsWithChildren) => {

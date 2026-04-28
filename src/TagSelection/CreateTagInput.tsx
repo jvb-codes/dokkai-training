@@ -1,8 +1,8 @@
-import useTagsContext from "@/customHooks/useTagsContext";
+import useTagsContext from "@/contexts/useContextHooks/useTagsContext";
 import useTagSelection from "@/customHooks/useTagSelection";
 import { Icon as BackArrow } from "@/customComponents/Icon";
 import useVocabList from "@/customHooks/useVocabList";
-import useVocabListContext from "@/customHooks/useVocabListContext";
+import useVocabListContext from "@/contexts/useContextHooks/useVocabListContext";
 
 const CreateTagInput = () => {
   const {

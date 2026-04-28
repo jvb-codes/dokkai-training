@@ -2,7 +2,7 @@ import {
   ScrollArea as VocabListScrollArea,
   ScrollBar as VocabListScrollBar,
 } from "@/components/ui/scroll-area";
-import useVocabListContext from "@/customHooks/useVocabListContext";
+import useVocabListContext from "@/contexts/useContextHooks/useVocabListContext";
 import VocabCard from "./VocabCards";
 
 const VocabListContent = () => {

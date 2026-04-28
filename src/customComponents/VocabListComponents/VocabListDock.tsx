@@ -1,4 +1,4 @@
-import useVocabListContext from "@/customHooks/useVocabListContext";
+import useVocabListContext from "@/contexts/useContextHooks/useVocabListContext";
 import { Icon as ChevronUp, Icon as ChevronDown } from "../Icon";
 
 const VocabListDock = () => {

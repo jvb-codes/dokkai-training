@@ -1,7 +1,7 @@
 import { VocabEntry as Reading, VocabEntry as Meaning } from "../VocabEntry";
 import { Button } from "@/components/ui/button";
 import useFlashCard from "@/customHooks/useFlashCard";
-import { useFlashCardContext } from "@/customHooks/useFlashCardContext";
+import { useFlashCardContext } from "@/contexts/useContextHooks/useFlashCardContext";
 
 const Back = () => {
   const { flashCardsProgress } = useFlashCard();

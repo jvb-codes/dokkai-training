@@ -1,5 +1,5 @@
-import { usePastedTextContext } from "./usePastedTextContext";
-import useVocabListContext from "./useVocabListContext";
+import { usePastedTextContext } from "@/contexts/useContextHooks/usePastedTextContext";
+import useVocabListContext from "../contexts/useContextHooks/useVocabListContext";
 
 const useHighlight = () => {
   const {

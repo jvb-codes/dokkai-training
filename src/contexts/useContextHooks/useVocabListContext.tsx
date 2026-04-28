@@ -1,12 +1,12 @@
 import { useContext } from "react";
-import { VocabListContext } from "@/context";
+import { VocabListContext } from "../createdContexts/VocabListContext";
 
 const useVocabListContext = () => {
   const context = useContext(VocabListContext);
 
   if (!context)
     throw new Error(
-      "useVocabListContext must be used within VocabListContextProvider. Is the component wrapped with the provider?"
+      "useVocabListContext must be used within VocabListContextProvider. Is the component wrapped with the provider?",
     );
 
   return context;

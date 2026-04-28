@@ -1,4 +1,4 @@
-import { useFlashCardContext } from "./useFlashCardContext";
+import { useFlashCardContext } from "../contexts/useContextHooks/useFlashCardContext";
 import { type VocabEntryType } from "@/data/vocabList";
 
 const useFlashCard = () => {

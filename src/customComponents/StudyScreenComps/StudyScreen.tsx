@@ -1,12 +1,7 @@
 import Text from "./Text";
 import ScreenContainer from "../ScreenContainer";
-import useScreenIdContext from "@/customHooks/useScreenIdContext";
-import {
-  ContextMenuContextProvider,
-  WordDefContextProvider,
-  VocabListProvider,
-  ExpandedCardContextProvider,
-} from "@/provider";
+import useDisplayIdContext from "@/contexts/useContextHooks/useDisplayIdContext";
+import { ExpandedCardContextProvider } from "@/contexts/providedContexts/ExpandedCardProvider";
 import Dock from "./Dock";
 import VocabList from "./VocabList";
 import DockOpener from "../VocabListComponents/VocabListDock";
@@ -14,8 +9,11 @@ import ExpandedVocabCard from "../ExpandedVocabCardComponents/ExpandedVocabCard"
 import TagSelectionScreen from "../../TagSelection/TagSelectionScreen";
 import Dialog from "../Dialog";
 import { Toaster } from "sonner";
+import { ContextMenuContextProvider } from "@/contexts/providedContexts/ContextMenuProvider";
+import { WordDefContextProvider } from "@/contexts/providedContexts/WordDefProvider";
+import { VocabListProvider } from "@/contexts/providedContexts/VocabListProvider";
 const StudyScreen = () => {
-  const { screenId } = useScreenIdContext();
+  const { screenId } = useDisplayIdContext();
 
   const customToastStyles = {
     unstyled: true,
@@ -30,8 +28,8 @@ const StudyScreen = () => {
       {screenId === 2 && (
         <ScreenContainer>
           <ContextMenuContextProvider>
-            <WordDefContextProvider>
-              <VocabListProvider>
+            <VocabListProvider>
+              <WordDefContextProvider>
                 <Dialog />
                 <Toaster toastOptions={customToastStyles} />
                 <Text />
@@ -43,8 +41,8 @@ const StudyScreen = () => {
                   </ExpandedCardContextProvider>
                   <DockOpener />
                 </Dock>
-              </VocabListProvider>
-            </WordDefContextProvider>
+              </WordDefContextProvider>
+            </VocabListProvider>
           </ContextMenuContextProvider>
         </ScreenContainer>
       )}

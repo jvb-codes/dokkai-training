@@ -1,4 +1,4 @@
-import useTagsContext from "@/customHooks/useTagsContext";
+import useTagsContext from "@/contexts/useContextHooks/useTagsContext";
 import TagSelectionHeader from "@/TagSelection/TagSelectionHeader";
 
 import TagSelectionPanel from "@/TagSelection/TagSelectionPanel";

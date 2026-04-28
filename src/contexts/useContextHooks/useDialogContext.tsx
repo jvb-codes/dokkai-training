@@ -1,4 +1,4 @@
-import { DialogContext } from "@/context";
+import { DialogContext } from "../createdContexts/DialogContext";
 import { useContext } from "react";
 const useDialogContext = () => {
   const context = useContext(DialogContext);

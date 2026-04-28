@@ -1,11 +1,11 @@
 import type { VocabEntryType } from "@/data/vocabList";
-import type { SearchedWordType } from "@/context";
-import useVocabListContext from "./useVocabListContext";
+import type { SearchedWordType } from "@/types/types";
+import useVocabListContext from "../contexts/useContextHooks/useVocabListContext";
 import useLocalStorage from "./useLocalStorage";
-import { usePastedTextContext } from "./usePastedTextContext";
+import { usePastedTextContext } from "@/contexts/useContextHooks/usePastedTextContext";
 import { toast } from "sonner";
-import useDialogContext from "./useDialogContext";
-import { useSearchedWordContext } from "./useSearchedWordContext";
+import useDialogContext from "../contexts/useContextHooks/useDialogContext";
+import { useSearchedWordContext } from "@/contexts/useContextHooks/useSearchedWordContext";
 
 const useVocabList = () => {
   const { vocabList, setVocabList } = useVocabListContext();

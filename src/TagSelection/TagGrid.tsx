@@ -1,4 +1,4 @@
-import useTagsContext from "@/customHooks/useTagsContext";
+import useTagsContext from "@/contexts/useContextHooks/useTagsContext";
 import CreateFlashcardStack from "./CreateFlashcardStack";
 import Tags from "./Tags";
 

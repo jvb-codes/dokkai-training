@@ -1,11 +1,11 @@
-import useTagsContext from "@/customHooks/useTagsContext";
+import useTagsContext from "@/contexts/useContextHooks/useTagsContext";
 import {
   EditField as WordField,
   EditField as ReadingField,
   EditField as MeaningField,
 } from "./EditField";
 import { Icon as BackArrow, Icon as UndoArrow } from "../Icon";
-import { useExpandedCardContext } from "@/customHooks/useEntryEditContext";
+import { useExpandedCardContext } from "@/contexts/useContextHooks/useExpandedCardContext";
 import useHandleClickedVocabCard from "@/customHooks/useHandleClickedVocabCard";
 
 const EditMode = () => {

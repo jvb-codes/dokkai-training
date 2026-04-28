@@ -1,12 +1,12 @@
 import { useContext } from "react";
-import { ContextMenuContext } from "@/context";
+import { ContextMenuContext } from "../createdContexts/ContextMenuContext";
 
 const useContextMenu = () => {
   const context = useContext(ContextMenuContext);
 
   if (!context) {
     throw new Error(
-      "useContextMenu must be called within ContextMenuContextProvider. Is the component wrapped with the provider?"
+      "useContextMenu must be called within ContextMenuContextProvider. Is the component wrapped with the provider?",
     );
   }
   return context;

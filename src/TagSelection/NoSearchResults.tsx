@@ -1,4 +1,4 @@
-import useTagsContext from "@/customHooks/useTagsContext";
+import useTagsContext from "@/contexts/useContextHooks/useTagsContext";
 
 const NoSearchResults = () => {
   const { searchedTag } = useTagsContext();

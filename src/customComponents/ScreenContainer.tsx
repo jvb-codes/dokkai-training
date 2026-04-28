@@ -1,8 +1,8 @@
-import useScreenIdContext from "@/customHooks/useScreenIdContext";
+import useDisplayIdContext from "@/contexts/useContextHooks/useDisplayIdContext";
 import type { ReactNode } from "react";
 
 const ScreenContainer = ({ children }: { children: ReactNode }) => {
-  const { screenId } = useScreenIdContext();
+  const { screenId } = useDisplayIdContext();
   return (
     <div
       className={`flex flex-col justify-center   items-center gap-5 animate-fade-in min-h-screen ${

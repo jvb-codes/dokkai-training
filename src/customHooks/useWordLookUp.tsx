@@ -1,8 +1,8 @@
 import axios from "axios";
-import type { SearchedWordType } from "@/context";
-import { useSearchedWordContext } from "./useSearchedWordContext";
+import type { SearchedWordType } from "@/types/types";
+import { useSearchedWordContext } from "@/contexts/useContextHooks/useSearchedWordContext";
 // import useWordDefinitionContext from "./useWordDefinitionContext";
-import useDialogContext from "./useDialogContext";
+import useDialogContext from "../contexts/useContextHooks/useDialogContext";
 
 const useWordLookUp = () => {
   const { setIsLookingUpWord } = useSearchedWordContext();

@@ -1,9 +1,9 @@
-import useTagsContext from "@/customHooks/useTagsContext";
+import useTagsContext from "@/contexts/useContextHooks/useTagsContext";
 import { ReadModeHeader } from "./ReadModeHeader";
 
 import Hiragana from "../VocabListComponents/Hiragana";
 import Kanji from "../VocabListComponents/Kanji";
-import { useExpandedCardContext } from "@/customHooks/useEntryEditContext";
+import { useExpandedCardContext } from "@/contexts/useContextHooks/useExpandedCardContext";
 import English from "../VocabListComponents/English";
 
 const ReadMode = () => {

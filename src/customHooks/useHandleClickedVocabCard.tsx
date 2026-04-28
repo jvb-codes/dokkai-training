@@ -1,6 +1,6 @@
-import { useExpandedCardContext } from "./useEntryEditContext";
-import useTagsContext from "./useTagsContext";
-import useVocabListContext from "./useVocabListContext";
+import { useExpandedCardContext } from "../contexts/useContextHooks/useExpandedCardContext";
+import useTagsContext from "../contexts/useContextHooks/useTagsContext";
+import useVocabListContext from "../contexts/useContextHooks/useVocabListContext";
 
 const useHandleClickedVocabCard = () => {
   const { vocabList, setVocabList } = useVocabListContext();

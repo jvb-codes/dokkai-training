@@ -1,15 +1,15 @@
 import useFlashCard from "@/customHooks/useFlashCard";
 import { VocabEntry as Word } from "../VocabEntry";
 import { Button } from "@/components/ui/button";
-import useScreenIdContext from "@/customHooks/useScreenIdContext";
-import { useFlashCardContext } from "@/customHooks/useFlashCardContext";
+import { useFlashCardContext } from "@/contexts/useContextHooks/useFlashCardContext";
 import { useEffect } from "react";
-import { usePastedTextContext } from "@/customHooks/usePastedTextContext";
+import { usePastedTextContext } from "@/contexts/useContextHooks/usePastedTextContext";
 import useLocalStorage from "@/customHooks/useLocalStorage";
-import useTagsContext from "@/customHooks/useTagsContext";
+import useTagsContext from "@/contexts/useContextHooks/useTagsContext";
+import useDisplayIdContext from "@/contexts/useContextHooks/useDisplayIdContext";
 
 const Front = () => {
-  const { setScreenId, screenId } = useScreenIdContext();
+  const { setScreenId, screenId } = useDisplayIdContext();
   const { flashCardsProgress } = useFlashCard();
   const {
     setKnownWords,

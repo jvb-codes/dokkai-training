@@ -1,5 +1,5 @@
 import { Icon as Add } from "@/customComponents/Icon";
-import useTagsContext from "@/customHooks/useTagsContext";
+import useTagsContext from "@/contexts/useContextHooks/useTagsContext";
 import useTagSelection from "@/customHooks/useTagSelection";
 
 const NoTagsOnVocabCard = () => {

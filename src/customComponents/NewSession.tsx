@@ -1,15 +1,15 @@
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import usePastedText from "@/customHooks/usePastedText";
-import { usePastedTextContext } from "@/customHooks/usePastedTextContext";
-import useScreenIdContext from "@/customHooks/useScreenIdContext";
+import { usePastedTextContext } from "@/contexts/useContextHooks/usePastedTextContext";
+import useDisplayIdContext from "@/contexts/useContextHooks/useDisplayIdContext";
 
 const NewSession = () => {
   const { handlePastedText, startNewSession, isTextValid } = usePastedText();
   const { setPastedText, setPastedTextError, pastedTextError, pastedText } =
     usePastedTextContext();
 
-  const { setScreenId } = useScreenIdContext();
+  const { setScreenId } = useDisplayIdContext();
 
   return (
     <>

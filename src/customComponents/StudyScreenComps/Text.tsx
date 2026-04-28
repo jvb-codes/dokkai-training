@@ -2,17 +2,17 @@ import {
   Card as TextCard,
   CardContent as TextCardContent,
 } from "@/components/ui/card";
-import { usePastedTextContext } from "@/customHooks/usePastedTextContext";
+import { usePastedTextContext } from "@/contexts/useContextHooks/usePastedTextContext";
 import ContextMenu from "./ContextMenu";
 import usePositionContextMenu from "@/customHooks/usePositionContextMenu";
 import WordDefinition from "./WordDefinition";
-import useWordDefinitionContext from "@/customHooks/useWordDefinitionContext";
-import { useSearchedWordContext } from "@/customHooks/useSearchedWordContext";
-import useContextMenu from "@/customHooks/useContextMenu";
+import useWordDefContext from "@/contexts/useContextHooks/useWordDefContext";
+import { useSearchedWordContext } from "@/contexts/useContextHooks/useSearchedWordContext";
+import useContextMenu from "@/contexts/useContextHooks/useContextMenuContext";
 
 import { useEffect } from "react";
 import useLocalStorage from "@/customHooks/useLocalStorage";
-import useVocabListContext from "@/customHooks/useVocabListContext";
+import useVocabListContext from "@/contexts/useContextHooks/useVocabListContext";
 
 const Text = () => {
   const { selectedText, setSelectedText, setSearchedWord } =
@@ -27,7 +27,7 @@ const Text = () => {
   const { vocabList } = useVocabListContext();
 
   //word definition card variables
-  const { setIsDefVisible } = useWordDefinitionContext();
+  const { setIsDefVisible } = useWordDefContext();
 
   const getSelectedText = () => {
     const selectedText = getSelection()?.toString();

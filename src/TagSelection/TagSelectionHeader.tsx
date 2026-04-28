@@ -1,9 +1,9 @@
-import useTagsContext from "@/customHooks/useTagsContext";
+import useTagsContext from "@/contexts/useContextHooks/useTagsContext";
 import SearchTagInput from "./SearchTagInput";
 import { Icon as ClosePanelButton } from "@/customComponents/Icon";
-import useVocabListContext from "@/customHooks/useVocabListContext";
+import useVocabListContext from "@/contexts/useContextHooks/useVocabListContext";
 import useVocabList from "@/customHooks/useVocabList";
-import { useFlashCardContext } from "@/customHooks/useFlashCardContext";
+import { useFlashCardContext } from "@/contexts/useContextHooks/useFlashCardContext";
 
 const TagSelectionHeader = () => {
   const {

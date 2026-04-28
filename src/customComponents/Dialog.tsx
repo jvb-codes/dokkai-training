@@ -8,7 +8,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import useDialogContext from "@/customHooks/useDialogContext";
+import useDialogContext from "@/contexts/useContextHooks/useDialogContext";
 
 import useVocabList from "@/customHooks/useVocabList";
 import Ok from "@/customComponents/DialogBtnLabels/Ok";

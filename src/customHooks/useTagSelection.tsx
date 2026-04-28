@@ -1,9 +1,9 @@
 import type { VocabEntryType } from "@/data/vocabList";
 import useFlashCard from "./useFlashCard";
 
-import useScreenIdContext from "./useScreenIdContext";
-import useTagsContext from "./useTagsContext";
-import useVocabListContext from "./useVocabListContext";
+import useDisplayIdContext from "@/contexts/useContextHooks/useDisplayIdContext";
+import useTagsContext from "../contexts/useContextHooks/useTagsContext";
+import useVocabListContext from "../contexts/useContextHooks/useVocabListContext";
 import { useEffect } from "react";
 
 const useTagSelection = () => {
@@ -24,7 +24,7 @@ const useTagSelection = () => {
   } = useTagsContext();
 
   const { setIsDockVisible, vocabList, setVocabList } = useVocabListContext();
-  const { setScreenId } = useScreenIdContext();
+  const { setScreenId } = useDisplayIdContext();
   const { flashCardsProgress } = useFlashCard();
 
   //tag page number
