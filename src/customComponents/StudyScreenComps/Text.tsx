@@ -30,11 +30,12 @@ const Text = () => {
   const { setIsDefVisible } = useWordDefContext();
 
   const getSelectedText = () => {
-    const selectedText = getSelection()?.toString();
-    if (selectedText && selectedText.length === 0) {
-      return;
-    }
-    setSelectedText(selectedText);
+    setTimeout(() => {
+      const selectedText = getSelection()?.toString().trim();
+
+      if (!selectedText) return;
+      setSelectedText(selectedText);
+    }, 100);
   };
 
   const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
