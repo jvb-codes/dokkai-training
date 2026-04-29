@@ -1,4 +1,4 @@
-import type { VocabEntryType } from "@/data/vocabList";
+import type { VocabEntryType } from "@/data/dummyVocabList";
 import useFlashCard from "./useFlashCard";
 
 import useDisplayIdContext from "@/contexts/useContextHooks/useDisplayIdContext";

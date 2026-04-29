@@ -1,4 +1,4 @@
-import type { VocabEntryType } from "@/data/vocabList";
+import type { VocabEntryType } from "@/data/dummyVocabList";
 
 const useLocalStorage = () => {
   type StudySessionType = {

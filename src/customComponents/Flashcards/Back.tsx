@@ -27,7 +27,7 @@ const Back = () => {
           />
           <Meaning
             styles="text-lg"
-            value={words[currentCardIndex]?.meaning ?? ""}
+            value={words[currentCardIndex]?.definition ?? ""}
           />
         </div>
         {isFlipped && (

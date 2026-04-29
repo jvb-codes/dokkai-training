@@ -2,6 +2,7 @@ import type { ReactNode, JSX } from "react";
 import { useState } from "react";
 import type { StudySessionType } from "@/types/types";
 import { PastedTextContext } from "../createdContexts/PastedTextContext";
+import { dummyText } from "@/data/dummyText";
 
 export const PastedTextContextProvider = ({
   children,
@@ -10,7 +11,7 @@ export const PastedTextContextProvider = ({
 }) => {
   const [prevSession, setPrevSession] = useState<StudySessionType | null>(null);
   const [pastedText, setPastedText] = useState<string>(
-    prevSession ? prevSession.text : "",
+    prevSession ? prevSession.text : dummyText,
   );
   const [isPastedTextHighlighted, setIsPastedTextHighlighted] = useState(false);
   const [pastedTextWithHighlights, setPastedTextWithHighlights] = useState<

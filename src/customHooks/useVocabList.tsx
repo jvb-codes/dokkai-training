@@ -1,4 +1,4 @@
-import type { VocabEntryType } from "@/data/vocabList";
+import type { VocabEntryType } from "@/data/dummyVocabList";
 import type { SearchedWordType } from "@/types/types";
 import useVocabListContext from "../contexts/useContextHooks/useVocabListContext";
 import useLocalStorage from "./useLocalStorage";

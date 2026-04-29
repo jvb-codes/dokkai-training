@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import usePastedText from "@/customHooks/usePastedText";
 import { usePastedTextContext } from "@/contexts/useContextHooks/usePastedTextContext";
 import useDisplayIdContext from "@/contexts/useContextHooks/useDisplayIdContext";
+import { dummyText } from "@/data/dummyText";
 
 const NewSession = () => {
   const { handlePastedText, startNewSession, isTextValid } = usePastedText();
@@ -17,6 +18,7 @@ const NewSession = () => {
         onChange={(e) =>
           handlePastedText(e.target.value, setPastedText, setPastedTextError)
         }
+        value={dummyText}
         autoFocus
         required
         placeholder="Paste some Japanese text here..."

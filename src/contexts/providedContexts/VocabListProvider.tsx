@@ -3,12 +3,12 @@ import { useState, useRef } from "react";
 import type { VocabEntryType } from "@/types/types";
 import { VocabListContext } from "../createdContexts/VocabListContext";
 import { usePastedTextContext } from "../useContextHooks/usePastedTextContext";
+import { dummyVocabList } from "@/data/dummyVocabList";
 
 export const VocabListProvider = ({ children }: { children: ReactNode }) => {
   const { prevSession } = usePastedTextContext();
-  console.log(prevSession?.vocabList);
   const [vocabList, setVocabList] = useState<VocabEntryType[]>(
-    prevSession ? prevSession.vocabList : [],
+    prevSession ? prevSession.vocabList : dummyVocabList,
   );
   const [isVocabListVisible, setIsVocabListVisible] = useState(false);
   const [isDockVisible, setIsDockVisible] = useState(true);

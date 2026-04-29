@@ -1,5 +1,5 @@
 import { useFlashCardContext } from "../contexts/useContextHooks/useFlashCardContext";
-import { type VocabEntryType } from "@/data/vocabList";
+import { type VocabEntryType } from "@/data/dummyVocabList";
 
 const useFlashCard = () => {
   const { setCurrentCardIndex, setWords, words } = useFlashCardContext();
