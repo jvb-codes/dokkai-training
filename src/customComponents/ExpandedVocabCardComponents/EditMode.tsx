@@ -4,79 +4,81 @@ import {
   EditField as ReadingField,
   EditField as MeaningField,
 } from "./EditField";
-import { Icon as BackArrow, Icon as UndoArrow } from "../Icon";
+import { Icon as UndoArrow } from "../Icon";
 import { useExpandedCardContext } from "@/contexts/useContextHooks/useExpandedCardContext";
 import useHandleClickedVocabCard from "@/customHooks/useHandleClickedVocabCard";
+import EditModeHeader from "./EditModeHeader";
+import EditModeContent from "./EditModeContent";
 
 const EditMode = () => {
-  const { clickedVocabCard, setClickedVocabCardDefaults } = useTagsContext();
+  const { clickedVocabCard } = useTagsContext();
 
-  const { setIsInEditMode, isEntryEdited, setIsEntryEdited } =
-    useExpandedCardContext();
+  const { isEntryEdited } = useExpandedCardContext();
   const { handleClickedVocabCard } = useHandleClickedVocabCard();
 
   return (
-    <div className="w-full space-y-20 m-7 animate-fade-in">
-      <BackArrow
-        iconName="arrow_back"
-        title="Back"
-        onClick={() => {
-          setIsInEditMode(false);
-          setClickedVocabCardDefaults(clickedVocabCard);
-          setIsEntryEdited({ word: false, reading: false, meaning: false });
-        }}
-        styles="cursor-pointer"
-      />
-      <div className="flex flex-col gap-3 text-xl w-full items-center">
-        <div className="flex items-center justify-center gap-3">
-          <WordField
-            handleOnBlur={() => handleClickedVocabCard.updateOnBlur()}
-            autofocus
+    <>
+      <EditModeHeader />
+      <EditModeContent>
+        <div className="flex items-center justify-between gap-2 ">
+          <label className="w-[15%]">Kanji:</label>
+          <input
+            onChange={(e) => {
+              handleClickedVocabCard.updateOnBlur();
+              handleClickedVocabCard.updateEntryOnChange(e);
+            }}
             value={clickedVocabCard?.word ?? ""}
             name="word"
-            handleEdit={(e) => handleClickedVocabCard.updateEntryOnChange(e)}
-            labelName="Kanji:"
+            className="focus:outline outline-inkwell-500 rounded-md overflow-ellipsis p-1 w-full  "
+            type="text"
           />
-
           <UndoArrow
             iconName="undo"
             title="Undo Changes"
-            styles={`${isEntryEdited.word ? "opacity-100 cursor-pointer " : "opacity-0 pointer-events-none"}`}
             onClick={() => handleClickedVocabCard.undoChanges("word")}
+            styles={`${isEntryEdited.word ? "opacity-100 cursor-pointer " : "opacity-0 pointer-events-none"}`}
           />
         </div>
-        <div className="flex items-center justify-center gap-3">
-          <ReadingField
-            handleOnBlur={() => handleClickedVocabCard.updateOnBlur()}
+        <div className="flex items-center justify-between gap-2">
+          <label className="w-[15%] ">Reading:</label>
+          <input
+            onChange={(e) => {
+              handleClickedVocabCard.updateOnBlur();
+              handleClickedVocabCard.updateEntryOnChange(e);
+            }}
             value={clickedVocabCard?.reading ?? ""}
             name="reading"
-            handleEdit={(e) => handleClickedVocabCard.updateEntryOnChange(e)}
-            labelName="Reading:"
+            className="focus:outline outline-inkwell-500 rounded-md overflow-ellipsis p-1 w-full"
+            type="text"
           />
           <UndoArrow
             iconName="undo"
             title="Undo Changes"
-            styles={`${isEntryEdited.reading ? "opacity-100 cursor-pointer " : "opacity-0 pointer-events-none"}`}
             onClick={() => handleClickedVocabCard.undoChanges("reading")}
+            styles={`${isEntryEdited.reading ? "opacity-100 cursor-pointer " : "opacity-0 pointer-events-none"}`}
           />
         </div>
-        <div className="flex items-center justify-center gap-3">
-          <MeaningField
-            handleOnBlur={() => handleClickedVocabCard.updateOnBlur()}
-            value={clickedVocabCard?.definition}
+        <div className="flex items-center justify-between gap-2 ">
+          <label className="w-[15%]">Meaning:</label>
+          <input
+            onChange={(e) => {
+              handleClickedVocabCard.updateOnBlur();
+              handleClickedVocabCard.updateEntryOnChange(e);
+            }}
+            value={clickedVocabCard?.definition ?? ""}
             name="meaning"
-            handleEdit={(e) => handleClickedVocabCard.updateEntryOnChange(e)}
-            labelName="Meaning:"
+            className="focus:outline outline-inkwell-500 rounded-md overflow-ellipsis p-1 w-full"
+            type="text"
           />
           <UndoArrow
             iconName="undo"
             title="Undo Changes"
-            styles={`${isEntryEdited.meaning ? "opacity-100 cursor-pointer " : "opacity-0 pointer-events-none"}`}
             onClick={() => handleClickedVocabCard.undoChanges("meaning")}
+            styles={`${isEntryEdited.meaning ? "opacity-100 cursor-pointer " : "opacity-0 pointer-events-none"}`}
           />
         </div>
-      </div>
-    </div>
+      </EditModeContent>
+    </>
   );
 };
 

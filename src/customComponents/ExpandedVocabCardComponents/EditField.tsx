@@ -16,12 +16,12 @@ export const EditField = ({
   handleOnBlur,
 }: EditFieldPropsType) => {
   return (
-    <div className="space-x-5">
-      <label className="inline-block text-right w-[75px] ">{labelName}</label>
+    <div>
+      <label className="w-[75px] border ">{labelName}</label>
       <input
         autoComplete="off"
         autoFocus={autofocus}
-        className="focus:outline outline-inkwell-500 rounded-md overflow-ellipsis p-2"
+        className="focus:outline outline-inkwell-500 rounded-md overflow-ellipsis p-1 border"
         type="text"
         required
         onChange={handleEdit}

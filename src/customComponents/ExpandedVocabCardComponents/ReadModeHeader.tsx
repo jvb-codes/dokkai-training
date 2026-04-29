@@ -9,7 +9,7 @@ export const ReadModeHeader = ({ setIsInEditMode }: HeaderType) => {
   const { setIsExpandedCardVisible } = useExpandedCardContext();
   const { setIsDockVisible } = useVocabListContext();
   return (
-    <div className="flex items-center justify-between p-3">
+    <div className="flex items-center justify-between ">
       <ArrowBack
         iconName={"arrow_back"}
         styles={"cursor-pointer"}
