@@ -9,13 +9,13 @@ const StartScreenOptions = () => {
   const { clearLocalStorage } = useLocalStorage();
 
   return (
-    <div className="flex gap-5 ">
+    <div className="flex flex-col md:flex-row gap-5 mt-2 ">
       <Button
         onClick={() => {
           clearLocalStorage();
           setPrevSession(null);
         }}
-        className="bg-accent-500  cursor-pointer font-semibold"
+        className="bg-accent-500 cursor-pointer font-semibold"
       >
         Study New Text
       </Button>
@@ -24,7 +24,7 @@ const StartScreenOptions = () => {
           setScreenId(2);
           if (prevSession) setPastedText(prevSession.text);
         }}
-        className="bg-accent-500  cursor-pointer font-semibold"
+        className="bg-accent-500 cursor-pointer font-semibold"
       >
         Study Previous Text
       </Button>

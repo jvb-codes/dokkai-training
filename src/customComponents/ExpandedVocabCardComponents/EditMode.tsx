@@ -13,12 +13,13 @@ const EditMode = () => {
   const { handleClickedVocabCard } = useHandleClickedVocabCard();
 
   return (
-    <>
+    <div className="animate-fade-in">
       <EditModeHeader />
       <EditModeContent>
         <div className="flex items-center justify-between gap-2 ">
           <label className=" ">Kanji:</label>
           <input
+            autoFocus
             onChange={(e) => {
               handleClickedVocabCard.updateOnBlur();
               handleClickedVocabCard.updateEntryOnChange(e);
@@ -74,7 +75,7 @@ const EditMode = () => {
           />
         </div>
       </EditModeContent>
-    </>
+    </div>
   );
 };
 

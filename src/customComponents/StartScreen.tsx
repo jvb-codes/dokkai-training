@@ -20,7 +20,7 @@ const StartScreen = () => {
     <>
       {screenId === 1 && (
         <ScreenContainer>
-          <h1 className="text-4xl sm:text-6xl lg:text-8xl font-bold text-inkwell-400">
+          <h1 className="text-5xl md:text-6xl lg:text-8xl font-bold text-inkwell-400">
             Dokkai Training
             <span className=" text-accent-500">.</span>
           </h1>

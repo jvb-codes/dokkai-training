@@ -18,13 +18,13 @@ const Tags = () => {
       ) : (
         filteredTags?.map((tag, index) => {
           return (
-            <div className="flex items-start gap-2  ml-6 mt-6">
+            <div className="flex gap-2 items-start mt-6     ">
               <Remove
                 iconName="remove"
                 styles="cursor-pointer"
                 onClick={() => removeTag(index)}
               />
-              <p className="truncate">{tag}</p>
+              <p className="truncate ">{tag}</p>
             </div>
           );
         })

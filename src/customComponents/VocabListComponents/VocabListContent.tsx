@@ -24,7 +24,7 @@ const VocabListContent = () => {
           } -z-10 bg-inkwell-600 rounded-md`}
         >
           <VocabCard />
-          <VocabListScrollBar className="p-0" orientation="horizontal" />
+          <VocabListScrollBar className="h-4 " orientation="horizontal" />
         </VocabListScrollArea>
       )}
     </>

@@ -63,7 +63,6 @@ const VocabCards = () => {
                     styles="cursor-pointer"
                   />
                 </div>
-
                 <English
                   english={entry.definition}
                   styles="w-[250px] overflow-hidden text-ellipsis whitespace-nowrap "

@@ -5,7 +5,7 @@ import Tags from "./Tags";
 const TagGrid = () => {
   const { isTagSelectionPanelVisible } = useTagsContext();
   return (
-    <div className="grid grid-cols-3 min-h-[190px]">
+    <div className="grid grid-cols-2 md:grid-cols-3 p-2 min-h-[190px] place-content-center ">
       {isTagSelectionPanelVisible.action === "createFlashcardStack" && (
         <CreateFlashcardStack />
       )}

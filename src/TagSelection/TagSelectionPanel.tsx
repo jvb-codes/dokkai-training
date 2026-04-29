@@ -4,7 +4,7 @@ const TagSelectionPanel = ({ children }: PropsWithChildren) => {
   return (
     <>
       {
-        <div className="flex flex-col justify-center bg-inkwell-600 text-inkwell-50 p-10 rounded-md fixed bottom-5 w-[600px] gap-5">
+        <div className="flex flex-col justify-center bg-inkwell-600 text-inkwell-50 p-5 rounded-md fixed bottom-8 w-[90%] md:w-[600px] lg:w-[896px] animate-fade-in">
           {children}
         </div>
       }
