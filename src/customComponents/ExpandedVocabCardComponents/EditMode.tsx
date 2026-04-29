@@ -1,9 +1,5 @@
 import useTagsContext from "@/contexts/useContextHooks/useTagsContext";
-import {
-  EditField as WordField,
-  EditField as ReadingField,
-  EditField as MeaningField,
-} from "./EditField";
+
 import { Icon as UndoArrow } from "../Icon";
 import { useExpandedCardContext } from "@/contexts/useContextHooks/useExpandedCardContext";
 import useHandleClickedVocabCard from "@/customHooks/useHandleClickedVocabCard";
@@ -21,7 +17,7 @@ const EditMode = () => {
       <EditModeHeader />
       <EditModeContent>
         <div className="flex items-center justify-between gap-2 ">
-          <label className="w-[15%]">Kanji:</label>
+          <label className=" ">Kanji:</label>
           <input
             onChange={(e) => {
               handleClickedVocabCard.updateOnBlur();
@@ -40,7 +36,7 @@ const EditMode = () => {
           />
         </div>
         <div className="flex items-center justify-between gap-2">
-          <label className="w-[15%] ">Reading:</label>
+          <label className=" ">Reading:</label>
           <input
             onChange={(e) => {
               handleClickedVocabCard.updateOnBlur();
@@ -59,7 +55,7 @@ const EditMode = () => {
           />
         </div>
         <div className="flex items-center justify-between gap-2 ">
-          <label className="w-[15%]">Meaning:</label>
+          <label className=" ">Meaning:</label>
           <input
             onChange={(e) => {
               handleClickedVocabCard.updateOnBlur();
