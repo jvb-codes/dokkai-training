@@ -36,11 +36,6 @@ const usePositionContextMenu = () => {
         y: e.clientY - textCardRect.top,
       });
     }
-
-    //possible errors in args passed into preventOverflow.
-    console.log(
-      "Nothing was returned from preventOverflow so the menu positioning failed. Check args passed into preventOverflow.",
-    );
   };
 
   return { positionContextMenu };

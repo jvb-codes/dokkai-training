@@ -13,10 +13,11 @@ import useContextMenu from "@/contexts/useContextHooks/useContextMenuContext";
 import { useEffect } from "react";
 import useLocalStorage from "@/customHooks/useLocalStorage";
 import useVocabListContext from "@/contexts/useContextHooks/useVocabListContext";
+import MobileContextMenu from "./MobileContextMenu";
 
 const Text = () => {
-  const { selectedText, setSelectedText, setSearchedWord } =
-    useSearchedWordContext();
+  const isTouchDevice = window.matchMedia("(pointer: coarse)").matches;
+  const { selectedText, setSelectedText } = useSearchedWordContext();
   const { pastedText, pastedTextWithHighlights, isPastedTextHighlighted } =
     usePastedTextContext();
   const { setIsMenuVisible } = useContextMenu();
@@ -29,18 +30,25 @@ const Text = () => {
   //word definition card variables
   const { setIsDefVisible } = useWordDefContext();
 
-  const getSelectedText = () => {
-    setTimeout(() => {
-      const selectedText = getSelection()?.toString().trim();
+  useEffect(() => {
+    const handleSelectionChange = () => {
+      const selection = window.getSelection()?.toString().trim();
 
-      if (!selectedText) return;
-      setSelectedText(selectedText);
-    }, 100);
-  };
+      if (!selection) return;
 
-  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
-    e.preventDefault();
-  };
+      setSelectedText(selection);
+
+      if (isTouchDevice) {
+        setIsMenuVisible(true);
+      }
+    };
+
+    document.addEventListener("selectionchange", handleSelectionChange);
+
+    return () => {
+      document.removeEventListener("selectionchange", handleSelectionChange);
+    };
+  }, [isTouchDevice, setSelectedText, setIsMenuVisible]);
 
   useEffect(() => {
     setLocalStorage(pastedText as string, vocabList);
@@ -49,22 +57,14 @@ const Text = () => {
   return (
     <>
       <TextCard
-        onDragOver={(e) => handleDragOver(e)}
         onClick={() => {
           setIsMenuVisible(false);
-
-          //gets the text selected by user
-          getSelectedText();
         }}
         className="relative h-auto max-w-4xl py-6 mb-40 text-black border-none shadow-2xl bg-inkwell-100 mt-7 font-display-Japanese"
         ref={cardRef}
-        //opens the context menu on right click.
-        //closes the word definition window if opened.
-        //sets searchedWord state back to default (undefined).
         onContextMenu={(e) => {
           e.preventDefault();
           setIsDefVisible(false);
-          setSearchedWord(undefined);
           positionContextMenu(e);
         }}
       >
@@ -76,11 +76,14 @@ const Text = () => {
           )}
         </TextCardContent>
         <WordDefinition />
-        <ContextMenu
-          setIsDefVisible={setIsDefVisible}
-          menuRef={menuRef}
-          selectedText={selectedText}
-        />
+        {!isTouchDevice && (
+          <ContextMenu
+            setIsDefVisible={setIsDefVisible}
+            menuRef={menuRef}
+            selectedText={selectedText}
+          />
+        )}
+        {isTouchDevice && <MobileContextMenu />}
       </TextCard>
     </>
   );

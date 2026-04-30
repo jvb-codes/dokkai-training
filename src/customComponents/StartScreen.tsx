@@ -20,12 +20,14 @@ const StartScreen = () => {
     <>
       {screenId === 1 && (
         <ScreenContainer>
-          <h1 className="text-5xl md:text-6xl lg:text-8xl font-bold text-inkwell-400">
-            Dokkai Training
-            <span className=" text-accent-500">.</span>
-          </h1>
-          {prevSession && <StartScreenOptions />}
-          {!prevSession && <NewSession />}
+          <section className="flex flex-col mb-20 items-center">
+            <h1 className="text-5xl md:text-6xl lg:text-8xl font-bold text-inkwell-400 mb-5">
+              Dokkai Training
+              <span className="text-accent-500">.</span>
+            </h1>
+            {prevSession && <StartScreenOptions />}
+            {!prevSession && <NewSession />}
+          </section>
         </ScreenContainer>
       )}
     </>

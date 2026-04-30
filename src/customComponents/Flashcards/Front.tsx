@@ -27,8 +27,6 @@ const Front = () => {
     setPrevSession(getLocalStorge());
   }, [screenId]);
 
-  console.log(words);
-
   return (
     <>
       {!isFlipped && (
@@ -56,10 +54,10 @@ const Front = () => {
             )}
             {words.length === 0 && (
               <>
-                <p className="text-lg">
+                <p className="text-lg text-center">
                   No more words to study. Let's take a break!
                 </p>
-                <div className="flex gap-5">
+                <div className="flex gap-5 mt-4">
                   <Button
                     onClick={() => {
                       flashCardsProgress.restartFlashcardStack(
@@ -67,7 +65,7 @@ const Front = () => {
                         setKnownWords,
                       );
                     }}
-                    className="cursor-pointer bg-inkwell-700 hover:bg-inkwell-900"
+                    className="cursor-pointer bg-inkwell-700 hover:bg-inkwell-600 border"
                   >
                     Restart
                   </Button>
@@ -76,7 +74,7 @@ const Front = () => {
                       setScreenId(2);
                       setClickedTags([]);
                     }}
-                    className="cursor-pointer bg-inkwell-700 hover:bg-inkwell-900"
+                    className="cursor-pointer"
                   >
                     Exit
                   </Button>

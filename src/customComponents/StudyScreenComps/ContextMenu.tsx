@@ -16,23 +16,13 @@ type ContextMenuPropsType = {
   selectedText: string | undefined;
 };
 
-const ContextMenu = ({
-  //positions menu on x and y axis within TextCard
-
-  //gets height and width of menu for adjusting positioning; prevents going over TextCard's rt and bottom borders
-  menuRef,
-  selectedText,
-}: ContextMenuPropsType) => {
+const ContextMenu = ({ menuRef, selectedText }: ContextMenuPropsType) => {
   const { lookUpWord } = useWordLookUp();
   const { setSearchedWord } = useSearchedWordContext();
   const { isMenuVisible, setIsMenuVisible, coords } = useContextMenu();
 
-  const {
-    setIsVocabListVisible,
-    setIsDockVisible,
-
-    setIsMounted,
-  } = useVocabListContext();
+  const { setIsVocabListVisible, setIsDockVisible, setIsMounted } =
+    useVocabListContext();
   const { setIsTagSelectionPanelVisible } = useTagsContext();
   const { flashCardsProgress } = useFlashCard();
   const { vocabList } = useVocabListContext();
@@ -46,18 +36,18 @@ const ContextMenu = ({
           top: !isMenuVisible ? -9999 : coords?.y,
           left: !isMenuVisible ? -9999 : coords?.x,
         }}
-        className={` w-[220px] ${
+        className={` w-[300px] ${
           isMenuVisible
             ? "absolute animate-fade-in shadow-md shadow-card-foreground"
             : "absolute pointer-events-none invisible"
-        }  bg-inkwell-50 border border-inkwell-200 rounded-md shadow-lg md:text-[14px]`}
+        }  bg-inkwell-600 border text-inkwell-50 rounded-md shadow-lg md:text-[14px] flex flex-col `}
       >
         <div
           onClick={() => {
             lookUpWord(selectedText, setSearchedWord);
             setIsMenuVisible(false);
           }}
-          className="hover:bg-inkwell-100  text-black cursor-pointer pl-8 md:pl-6 py-3 flex items-center gap-3"
+          className="flex gap-2 cursor-pointer hover:bg-inkwell-500 py-5 px-3"
         >
           <SearchIcon iconName="search" />
           <p>Look Up Word</p>
@@ -68,7 +58,7 @@ const ContextMenu = ({
             setIsMounted((prev) => !prev);
             setIsVocabListVisible(true);
           }}
-          className="hover:bg-inkwell-100  text-black cursor-pointer pl-8 md:pl-6 py-3 flex items-center gap-3"
+          className="flex gap-2 cursor-pointer hover:bg-inkwell-500 py-5 px-3"
         >
           <ListIcon iconName="list" />
           <p>See Vocab List</p>
@@ -81,7 +71,7 @@ const ContextMenu = ({
               setScreenId,
             );
           }}
-          className="hover:bg-inkwell-100  text-black cursor-pointer pl-8 md:pl-6 py-3 flex items-center gap-3"
+          className="flex gap-2 cursor-pointer hover:bg-inkwell-500 py-5 px-3"
         >
           <ListIcon iconName="list" />
           <p>Study Flashcards</p>
@@ -95,7 +85,7 @@ const ContextMenu = ({
               action: "createFlashcardStack",
             });
           }}
-          className="hover:bg-inkwell-100  text-black cursor-pointer pl-8 md:pl-6 py-3 flex items-center gap-3"
+          className="flex gap-2 cursor-pointer hover:bg-inkwell-500 py-5 px-3"
         >
           <ListIcon iconName="cards_stack" />
           <p>Customize Flashcards</p>

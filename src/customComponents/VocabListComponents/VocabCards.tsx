@@ -17,15 +17,13 @@ import useHighlight from "@/customHooks/useHighlight";
 import useDialogContext from "@/contexts/useContextHooks/useDialogContext";
 
 const VocabCards = () => {
-  const { vocabList, setIsDockVisible, setIsVocabListVisible } =
+  const { vocabList, setIsDockVisible, setIsVocabListVisible, setIsMounted } =
     useVocabListContext();
   const { setIsTagSelectionPanelVisible } = useTagsContext();
   const { handleClickedVocabCard } = useHandleClickedVocabCard();
   const { highlight } = useHighlight();
   const { setIsExpandedCardVisible } = useExpandedCardContext();
   const { setDialog } = useDialogContext();
-
-  console.log(vocabList);
 
   return (
     <>
@@ -75,6 +73,8 @@ const VocabCards = () => {
                       handleClickedVocabCard.findCard(entry.id);
                       setIsExpandedCardVisible(true);
                       setIsDockVisible(false);
+                      setIsVocabListVisible(false);
+                      setIsMounted((prev) => !prev);
                     }}
                     styles="vocabListContent__edit-card cursor-pointer inline-flex"
                   />

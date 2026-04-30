@@ -20,7 +20,7 @@ const CreateFlashcardStackBtn = () => {
   return (
     <>
       {isTagSelectionPanelVisible.action === "createFlashcardStack" && (
-        <div className="text-center">
+        <div className="text-center mb-4">
           {allTags.length > 0 && (
             <Button
               onClick={() => {
